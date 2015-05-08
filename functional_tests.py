@@ -16,5 +16,7 @@ class NewVisitorTest(unittest.TestCase):
 		self.assertIn('To-Do', self.browser.title)
 		self.fail('Fininsh the test')
 
+		#Define further
+		 
 if __name__ == '__main__':
 	unittest.main()	
