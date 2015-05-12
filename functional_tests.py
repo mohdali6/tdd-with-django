@@ -19,7 +19,7 @@ class NewVisitorTest(unittest.TestCase):
 		self.assertIn('To-Do', header_text)
 		
 		inputbox = self.browser.find_element_by_id('id_new_item')
-		slef.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
+		self.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
 
 		inputbox.send_keys('Buy Apple Watch')
 		
@@ -27,7 +27,7 @@ class NewVisitorTest(unittest.TestCase):
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(any(row.text == '1: Buy Apple Watch') for row in rows)
+		self.assertTrue( any(row.text == '1: Buy Apple Watch' for row in rows), "New to-do element not in table")
 
 		self.fail('Fininsh the test!')
 
