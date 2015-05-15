@@ -12,6 +12,11 @@ class NewVisitorTest(unittest.TestCase):
 	def tearDown(self):
 		self.browser.quit()
 
+	def check_row_in_list_table(self, row_text):
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn(row_text, [row.text for row in rows])
+
 	def test_can_start_list_and_retrieve_later(self):
 		self.browser.get('http://localhost:8000')
 
@@ -25,9 +30,7 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys('Buy Apple Watch')
 		
 		inputbox.send_keys(Keys.ENTER)
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('1: Buy Apple Watch', [row.text for row in rows])
+		self.check_row_in_list_table('1: Buy Apple Watch')
 
 		# New text box to enter new to-do item.
 		inputbox = self.browser.find_element_by_id('id_new_item')
@@ -35,10 +38,8 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys(Keys.ENTER)
 
 		# The page updates, and now shows both to-do items
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('1: Buy Apple Watch', [row.text for row in rows])
-		self.assertIn('2: Use Apple Watch', [row.text for row in rows])
+		self.check_row_in_list_table('1: Buy Apple Watch')
+		self.check_row_in_list_table('2: Use Apple Watch')
 
 		self.fail('Fininsh the test!')
 
